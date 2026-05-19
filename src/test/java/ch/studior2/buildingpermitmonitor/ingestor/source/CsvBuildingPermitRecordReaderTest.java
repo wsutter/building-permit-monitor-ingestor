@@ -1,0 +1,42 @@
+package ch.studior2.buildingpermitmonitor.ingestor.source;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Named.named;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+import java.io.StringReader;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+@DisplayName("CsvBuildingPermitRecordReader")
+class CsvBuildingPermitRecordReaderTest {
+
+  private final CsvBuildingPermitRecordReader reader = new CsvBuildingPermitRecordReader();
+
+  @Nested
+  @DisplayName("read")
+  class Read {
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("csvInputs")
+    @DisplayName("should convert CSV rows to payload maps")
+    void shouldConvertCsvRowsToPayloadMaps(String csv, int expectedRows) throws Exception {
+      assertThat(reader.read(new StringReader(csv))).hasSize(expectedRows);
+    }
+
+    static Stream<Arguments> csvInputs() {
+      return Stream.of(
+          arguments(
+              named("single building permit row", "Gemeinde,Bauvorhaben\nZürich,Neubau EFH\n"), 1),
+          arguments(
+              named(
+                  "two building permit rows",
+                  "Gemeinde,Bauvorhaben\nZürich,Neubau EFH\nThalwil,Umbau Wohnung\n"),
+              2));
+    }
+  }
+}

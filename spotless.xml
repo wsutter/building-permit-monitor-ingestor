@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Spotless configuration for Java/Maven modules.
+
+  This file is intentionally kept next to the module's pom.xml so that each
+  module can be opened and formatted independently in IntelliJ IDEA or built
+  through Maven.
+
+  Maven usage:
+    mvn spotless:apply
+    mvn spotless:check
+-->
+<spotless>
+  <java>
+    <includes>
+      <include>src/main/java/**/*.java</include>
+      <include>src/test/java/**/*.java</include>
+    </includes>
+
+    <excludes>
+      <exclude>target/**/*.java</exclude>
+      <exclude>build/**/*.java</exclude>
+      <exclude>.idea/**/*.java</exclude>
+    </excludes>
+
+    <googleJavaFormat>
+      <version>1.27.0</version>
+      <style>GOOGLE</style>
+      <reflowLongStrings>true</reflowLongStrings>
+      <formatJavadoc>true</formatJavadoc>
+    </googleJavaFormat>
+
+    <removeUnusedImports/>
+    <importOrder/>
+    <formatAnnotations/>
+    <trimTrailingWhitespace/>
+    <endWithNewline/>
+  </java>
+
+  <pom>
+    <includes>
+      <include>pom.xml</include>
+    </includes>
+
+    <sortPom>
+      <expandEmptyElements>false</expandEmptyElements>
+    </sortPom>
+
+    <trimTrailingWhitespace/>
+    <endWithNewline/>
+  </pom>
+
+  <format>
+    <name>misc</name>
+
+    <includes>
+      <include>README.md</include>
+      <include>src/main/resources/**/*.yml</include>
+      <include>src/main/resources/**/*.yaml</include>
+      <include>src/test/resources/**/*.yml</include>
+      <include>src/test/resources/**/*.yaml</include>
+      <include>src/main/resources/**/*.properties</include>
+      <include>src/test/resources/**/*.properties</include>
+      <include>.gitignore</include>
+    </includes>
+
+    <excludes>
+      <exclude>target/**</exclude>
+      <exclude>.idea/**</exclude>
+    </excludes>
+
+    <trimTrailingWhitespace/>
+    <endWithNewline/>
+  </format>
+</spotless>
