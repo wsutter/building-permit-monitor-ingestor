@@ -2,6 +2,21 @@ spring:
   application:
     name: ingestor
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/building_permits
+    username: app
+    password: app
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: false
+
   kafka:
     bootstrap-servers: localhost:9092
     producer:

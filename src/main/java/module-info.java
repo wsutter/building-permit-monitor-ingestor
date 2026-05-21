@@ -1,4 +1,6 @@
 module ch.studior2.buildingpermitmonitor.ingestor {
+  requires ch.studior2.buildingpermitmonitor.contracts;
+  requires ch.studior2.buildingpermitmonitor.persistence;
   requires spring.boot;
   requires spring.boot.autoconfigure;
   requires spring.context;
@@ -7,7 +9,9 @@ module ch.studior2.buildingpermitmonitor.ingestor {
   requires kafka.clients;
   requires tools.jackson.databind;
   requires org.apache.commons.csv;
-  requires ch.studior2.buildingpermitmonitor.contracts;
+  requires spring.data.jpa;
+  requires spring.boot.persistence;
+  requires org.slf4j;
 
   opens ch.studior2.buildingpermitmonitor.ingestor to
       spring.core,
