@@ -48,6 +48,27 @@ class CsvBuildingPermitRecordReaderTest {
     }
 
     @Test
+    @DisplayName("should expose the real OGD header names as payload keys")
+    void shouldExposeRealOgdHeaderNamesAsPayloadKeys() throws Exception {
+      String csv =
+          "id,publicationNumber,bfs_nr,municipality_name,projectDescription,"
+              + "projectLocation_address_street,projectLocation_address_houseNumber,"
+              + "projectLocation_address_swissZipCode,projectLocation_address_town,last_updated\n"
+              + "00002982,00006183,141,Thalwil,Umbau Wohnung,"
+              + "Eisenbahnstrasse,27,8800,Thalwil,2026-05-18\n";
+
+      assertThat(reader.read(new StringReader(csv)))
+          .singleElement()
+          .satisfies(
+              row ->
+                  assertThat(row)
+                      .containsEntry("municipality_name", "Thalwil")
+                      .containsEntry("projectLocation_address_street", "Eisenbahnstrasse")
+                      .containsEntry("projectLocation_address_swissZipCode", "8800")
+                      .containsEntry("last_updated", "2026-05-18"));
+    }
+
+    @Test
     @DisplayName("should parse quoted commas as part of the field value")
     void shouldParseQuotedCommasAsPartOfFieldValue() throws Exception {
       String csv = "id,Bauvorhaben\nzh-2026-0001,\"Umbau Küche, Bad und Balkon\"\n";
